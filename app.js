@@ -4,6 +4,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import { errors } from "celebrate";
 
 import authRoutes from "./routes/googleAuthRoute.js";
 import { errorHandler } from "./middlewares/error-handler.js";
@@ -23,6 +24,7 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 
+app.use(errors()); //celebrate error handler
 app.use(errorHandler); // centralized error handler
 
 //test

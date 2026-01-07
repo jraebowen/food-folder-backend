@@ -61,15 +61,15 @@ export const updateRecipe = async (req, res, next) => {
       throw new BadRequestError("Invalid recipe ID format");
     }
     const updates = req.body;
-    const recipe = await Recipe.findByIdAndUpdate(recipeId, updates, {
+    const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, updates, {
       new: true,
       runValidators: true,
     });
 
-    if (!recipe) {
+    if (!updatedRecipe) {
       throw new NotFoundError("Recipe not found");
     }
-    res.status(ERROR_STATUS.OK).json(recipe);
+    res.status(ERROR_STATUS.OK).json(updatedRecipe);
   } catch (err) {
     if (err.name === "CastError") {
       return next(new BadRequestError("Invalid recipe ID format"));
