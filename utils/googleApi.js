@@ -91,3 +91,59 @@ export const getDocContent = async (auth, documentId) => {
 
   return res.data;
 };
+
+//get text from docs
+export const parseRecipeTextFromGoogleDoc = (text) => {
+  if (!text) return null;
+
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  let title = "";
+  let servings = "";
+  const ingredients = [];
+  const directions = [];
+
+  let section = ""; // tracks which part we're in
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Detect the title (first non-empty line)
+    if (i === 0) {
+      title = line;
+      continue;
+    }
+
+    // Detect servings (looks like it contains "servings")
+    if (!servings && /servings?/i.test(line)) {
+      servings = line;
+      continue;
+    }
+
+    // Detect sections
+    if (/^ingredients:/i.test(line)) {
+      section = "ingredients";
+      continue;
+    } else if (/^directions:/i.test(line)) {
+      section = "directions";
+      continue;
+    }
+
+    // Add lines to current section
+    if (section === "ingredients") {
+      ingredients.push(line);
+    } else if (section === "directions") {
+      directions.push(line);
+    }
+  }
+
+  return {
+    title,
+    servings,
+    ingredients,
+    directions,
+  };
+};

@@ -3,6 +3,7 @@ import {
   validateId,
   createRecipeValidation,
   updateRecipeValidation,
+  importFromGoogleValidation,
 } from "../middlewares/validation.js";
 import {
   getAllRecipes,
@@ -11,6 +12,7 @@ import {
   updateRecipe,
   createRecipe,
 } from "../controllers/recipeController.js";
+import { importFromGoogleUrl } from "../controllers/googleRecipeController.js";
 
 const router = express.Router();
 
@@ -23,5 +25,7 @@ router.delete("/:recipeId", validateId, deleteRecipe);
 router.patch("/:recipeId", updateRecipeValidation, updateRecipe);
 
 router.post("/", createRecipeValidation, createRecipe);
+
+router.post("/import", importFromGoogleValidation, importFromGoogleUrl);
 
 export default router;
