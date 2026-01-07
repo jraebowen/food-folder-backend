@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { errors } from "celebrate";
 
 import authRoutes from "./routes/googleAuthRoute.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
 import { errorHandler } from "./middlewares/error-handler.js";
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRoutes);
+app.use("/recipes", recipeRoutes);
 
 app.use(errors()); //celebrate error handler
 app.use(errorHandler); // centralized error handler
