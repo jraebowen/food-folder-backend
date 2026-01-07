@@ -12,9 +12,21 @@ export const ERROR_STATUS = {
   },
 };
 
-export class BadRequestError extends Error {
-  constructor(message) {
+export class AppError extends Error {
+  constructor(message, statusCode) {
     super(message);
-    this.statusCode = 400;
+    this.statusCode = statusCode;
+  }
+}
+
+export class BadRequestError extends AppError {
+  constructor(message = "Bad Request") {
+    super(message, ERROR_STATUS.BAD_REQUEST);
+  }
+}
+
+export class NotFoundError extends AppError {
+  constructor(message = "Not Found") {
+    super(message, ERROR_STATUS.NOT_FOUND);
   }
 }
