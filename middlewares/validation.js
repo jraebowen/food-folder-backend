@@ -52,16 +52,6 @@ export const updateRecipeValidation = celebrate({
       "string.base": "Title must be a string",
       "string.min": "Title must be at least 2 characters",
     }),
-    source: Joi.string().messages({
-      "string.base": "Source must be a string",
-    }),
-    sourceUrl: Joi.string().uri().messages({
-      "string.uri": "Source URL must be a valid URL",
-      "string.base": "Source URL must be a string",
-    }),
-    textContent: Joi.string().messages({
-      "string.base": "Text content must be a string",
-    }),
     servings: Joi.number().min(1).messages({
       "number.base": "Servings must be a number",
       "number.min": "Servings must be at least 1",

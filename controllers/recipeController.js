@@ -60,7 +60,12 @@ export const updateRecipe = async (req, res, next) => {
     if (!recipeId.match(/^[0-9a-fA-F]{24}$/)) {
       throw new BadRequestError("Invalid recipe ID format");
     }
-    const updates = req.body;
+    const updates = (({ title, servings, ingredients, directions }) => ({
+      title,
+      servings,
+      ingredients,
+      directions,
+    }))(req.body);
     const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, updates, {
       new: true,
       runValidators: true,
